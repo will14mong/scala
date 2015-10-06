@@ -27,3 +27,42 @@ println("onePlus(5) = " + onePlus(5))
 // control structures
 def twice(op: Double => Double, x: Double) = op(op(x))
 println(twice(_ + 1, 5))
+
+println("Hello, world!")
+println { "Hello, world!" }
+
+import java.io._
+
+// loan pattern
+def withPrintWriter(file: File)(op: PrintWriter => Unit) {
+  val writer = new PrintWriter(file)
+  try {
+    op(writer)
+  } finally {
+    writer.close()
+  }
+}
+
+val file = new File("date.txt")
+withPrintWriter(file) {
+  writer => writer.println(new java.util.Date)
+}
+
+// by name parameter
+var assertionsEnabled = true
+def myAssert(predicate: () => Boolean) = 
+  if (assertionsEnabled && !predicate()) 
+    throw new AssertionError
+
+myAssert(() => 5 > 3)
+
+// we would want to write it this way myAssert(5 > 3)
+
+// byName parameter start with => instead of () =>
+// when calling predicate, omit ()
+def byNameAssert(predicate: => Boolean) =
+  if (assertionsEnabled && !predicate)
+    throw new AssertionError
+
+byNameAssert(5 > 3)
+byNameAssert(3 > 5)
