@@ -1,0 +1,71 @@
+* PRIVATE members
+- Is visible only inside the class or object that contains the member definition
+class Outer {
+  class Inner {
+    private def f() { println("f") }
+    class InnerMost {
+      f() // OK
+    }
+  }
+  (new Inner).f() // error: f is not accessible, in java this is allowed
+}
+
+* PROCTECTED members
+- only accesible from subclasses of the class in which the member is defined.
+package p {
+  class Super {
+    protected def f() { println("f") }
+  }
+  class Sub extends Super {
+    f()
+  }
+  class Other {
+    (new Super).f() // error: f is not accessible, in java this is allowed
+  }
+}
+
+* PUBLIC members
+- no keyword, can be accessed from anywhere
+
+* SCOPE of protection
+
+package bobsrockets
+package navigation {
+  private[bobsrockets] class Navigator {
+    protected[navigation] def useStarChart() {}
+    class LegOfJourney {
+      private[Navigator] val distance = 100
+    }
+    private[this] var speed = 200
+  }
+}
+
+package launch {
+  import navigation._
+  object Vehicle {
+    private[launch] val guide = new Navigator
+  }
+}
+
+private[bobsrockets] this means that this class is visible in all classes and objects that are contained in package bobsrockets.
+private[this] is accessible only from within the same object that contains the definition. Such a definition is called object-private.
+
+* Visibility and Companion objects
+- scala's access rules privilege companion objects and classes when it comes to private or protected accesses. A class shares all its access rights with its companion object and vice versa.
+
+class Rocket {
+  import Rocket.fuel
+  private def canGoHomeAgain = fuel > 20
+}
+
+object Rocket {
+  private def fule = 10
+  def chooseStrategy(rocket: Rocket) {
+    if (rocket.canGoHomeAgain)
+      goHome()
+    else
+      pickAStar()
+  }
+  def goHome() {}
+  def pickAStar() {}
+}
