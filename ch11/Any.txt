@@ -1,0 +1,34 @@
+top of hierarchy is class Any which defines methods that include the following
+
+final def ==(that: Any): Boolean
+final def !=(that: Any): Boolean
+def equals(that: Any): Boolean
+def ##: Int
+def hashCode: int
+def toString: String
+
+Root class Any has two subclasses: AnVal and AnyRef
+Refer to pg: 252 of Programming in Scala 2nd Edition for class relationship graph.
+
+AnyVal is the parent class of every built-in value class in Scala.
+  Byte, Short, Char, Int, Long, Float, Double, Boolean and Unit.
+  The instances of these classes are all written as literals in Scala. eg: 42 instance of Int, 'x' instance of Char.
+  We cannot create instances of these classes  using new.
+
+AnyRef is the base class of all reference classes in Scala.
+  It is in fact just an alias for class java.lang.Object.
+  Classes written in Java or Scala all inherit from AnyRef.
+  We can use Object and AnyRef interchangeably in Scala programs on the Java platform
+  Scala classes are different from Java classes in that they also inherit from special marker trait called ScalaObject
+
+At the bottom of the type hierarchy there is 2 classes:
+scala.Null
+scala.Nothing
+
+Class Null is the type of the null reference, it is a subclass of every
+  reference classes
+
+Type Nothing is at the very bottom of Scala's class hierarchy, it is a subtype
+  of every other type.
+def error(message: String): Nothing = throw new RuntimeException(message)
+this has type Nothing
