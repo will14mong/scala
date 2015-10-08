@@ -1,0 +1,54 @@
+// easy access to Fruit
+import bobsdelights.Fruit
+
+// easy access to all members of bobsdelights
+import bobsdelights._
+
+// easy access to all members of Fruits
+import bobsdelights.Fruits._
+
+// You can play around with the following
+package bobsdelights
+
+abstract class Fruit(
+  val name: String,
+  val color: String
+)
+
+object Fruits {
+  object Apple extends Fruit("apple", "red")
+  object Orange extends Fruit("orange", "orange")
+  object Pear extends Fruit("pear","yellowish")
+  val menu = List(Apple, Orange, Pear)
+}
+
+// Import can appear anywhere, not just at the beginning of a compilation  unit.
+def showFruit(fruit: Fruit) {
+  import fruit._
+  println(name + "s are " + color)
+}
+
+// Import in Scala is more flexible, it allow:
+// - may appear anywhere
+// - may refer to objects(singleton or regular)in addition to packages
+// - let you rename and hide some of the imported members
+
+// Rename or hide objects
+import Fruits.{Apples, Orange}
+import Fruits.{Apple => McIntosh, Orange}
+
+// imports java.sql package as S, so we can write things like S.Date
+import java.{sql => S}
+
+// imports all members from object Fruits but renames Apple to McIntosh
+import Fruits.{Apple => McIntosh,_}
+
+// imports all members of Fruits except Pear
+import Fruits.{Pear => _,_}
+
+// Implicit imports
+// These are imported on top of every source file with extension *.scala
+import java.lang._ // everything in the java.lang package
+import scala._     // everything in scala package
+import Predef._    // everything in the Predef object
+// whatever similar class in scala._ replaces those in java.lang._
