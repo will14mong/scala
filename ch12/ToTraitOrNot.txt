@@ -1,0 +1,21 @@
+// For more explanation of the example below, please refer to pg 273 on Programming in Scala book 2nd Edition
+
+class Animal
+trait Furry extends Animal
+trait HasLegs extends Animal
+trait FourLegged extends HasLegs
+class Cat extends Animal with Furry with FourLegged
+
+Animal -> AnyRef -> Any
+Furry -> Animal -> AnyRef -> Any
+FourLegged -> HasLegs -> Furry -> Animal -> AnyRef -> Any
+Cat -> FourLegged -> HasLegs -> Furry -> Animal -> AnyRef -> Any
+
+
+TO TRAIT OR NOT TO TRAIT
+- if the behavior will not be reused, then make it a concrete class. It is not reusable behavior after all
+- if it might be reused in multiple, unrelated classes, make it a trait. Only traits can be mixed into different parts of the class hierarchy
+- if you want to inherit from it in Java code, use an abstract class. Since traits with code do not have a close Java analog
+- if you plan to distribute it in compiled form, and you expect outside groups to write classes inheriting from it, you might lean towards usign abstract class.
+- if efficiency is very important, lean towards using a class
+- if you still do not know, start by making it as a trait and change it later
