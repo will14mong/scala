@@ -1,0 +1,22 @@
+Without Ordered trait , what we implement in ch06 (Rational class)
+
+class Rational(n: Int, d: Int) {
+  // ...
+  def < (that: Rational) = this.numer * that.denom > that.numer * this.denom
+  def > (that: Rational) = that < this)
+  def <= (that: Rational) = (this < that) || (this == that)
+  def >= (that: Rational) = (this > that) || (this == that)
+}
+
+Take note that the above is quite a lot of boilerplate code.
+With Ordered Trait, we can do:
+
+class Rational(n: Int, d: Int) extends Ordered[Rational] {
+   // ...
+   def compare(that: Rational) = (this.numer * that.denom) - (that.numer * this.denom)
+}
+
+We can just define compare which does return an integer that is:
+- Zero if the objects are the same
+- Negative if receiver is less than the argument
+- Positive if the receiver is greater than the argument
