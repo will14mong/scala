@@ -9,9 +9,11 @@ class ElementSuite extends Suite {
 }
 
 /*
-Compilations step:
+* Download scalatest jar file from http://www.scalatest.org
+
+* Compilations step:
 scalac -cp scalatest_2.11-2.2.4.jar Element.scala ElementSuite.scala
 
-Running step:
+* Running step:
 scala -cp scalatest_2.11-2.2.4.jar org.scalatest.run ElementSuite
 */
