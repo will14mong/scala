@@ -1,0 +1,25 @@
+ASSERT
+- assert(condition) throws an AssertionError if condition does not hold
+- assert(condition, explanation) tests condition, and, if it does not hold, throws an AssertionError that contains the given explanation (type Any pass and convert toString)
+
+def above(that: Element): Element = {
+  val this1 = this widen that.width
+  val that1 = that widen this.width
+  assert(this1.width = that1.width)
+  elem(this1.contents ++ that1.contents)
+}
+
+ENSURE
+- ensure can be used with any result type because of implicit conversion
+- takes one argument, a predicate function that takes a result type and returns Boolean.
+- ensuring will pass the result to the predicate and if it is returning true, ensuring will return the result
+- otherwise, ensuring will throw an AssertionError
+
+private def widen(w: Int): Element =
+  if (w <= width)
+    this
+  else {
+    val left = elem(' ', (w - width) / 2, height)
+    var right = elem(' ', w - width - left.width, height)
+    left beside this beside right
+  } ensuring (w <= _.width)
