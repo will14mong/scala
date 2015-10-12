@@ -1,0 +1,99 @@
+Kind of patterns:
+
+1. Wildcard patterns
+
+expr match {
+  case BinOp(_, _, _) => println(expr + "is a binary operation)
+  case _ => println("It'ssomething else")
+}
+
+2. Constant patterns
+
+Any literal can be used as a constant.
+For example: 5, true, and "hello" are all constant patterns.
+
+def describe(x: Any) = x match {
+  case 5 => "Five"
+  case true => "truth"
+  case "hello" => "hi!"
+  case Nil =>  "the empty list"
+  case _ => "something else"
+}
+
+3. Variable patterns
+
+expr match {
+  case 0 => "zero"
+  case somethingElse => "not zero: " + somethingElse
+}
+
+variable or constant ?
+import math.{E, Pi}
+
+E match {
+  case Pi => "strange math? Pi = " + Pi
+  case _ => "OK"
+}
+
+* In this Case E doesn't match Pi and will returned "OK".
+  how does it know it is a Pi value ?
+  scala know this by using simple lexical rule, a simple name starting with lowercase letter is taken to be
+    a pattern variable. all others are constant.
+
+E match {
+  case pi => "strange math ? Pi = " + pi
+}
+
+* In this case it will return strange math because p is a variable, and we are not allowed to add case _
+
+* If we want to use pi as variable we enclosed it with `. In this case will be case `pi` => ...
+
+4. Constructor patterns
+
+expr match {
+  case BinOp("+", e, Number(0)) => println("a deep match")
+  case _ =>
+}
+
+5. Sequence patterns
+
+Can use against sequence types like List or Array.
+
+expr match {
+  case List(0, _,_) => println("found it")
+  case _ =>
+}
+
+if we want to match against a sequence of any length, specify _* as the last element of the pattern.
+
+expr match {
+  case List(0, _*) => println("found it")
+  case _ =>
+}
+
+6. Tuple patterns
+
+def tupleDemo(expr: Any) =
+ expr match {
+   case (a,b,c) => println("matched " + a + b + c)
+   case _ =>
+ }
+
+7. Typed patterns
+
+def generalSize(x: Any) = x match {
+  case s: String => s.length
+  case m: Map[_, _] => m.size
+  case _ => -1
+}
+
+eg: generalSize("abc") will result in 3
+    generalSize(Map(1 -> 'a', 2 -> 'b')) will result in 2
+    generalSize(math.Pi) will result in -1
+
+primitive way:
+if (x.isInstanceOf[String]) {
+  val s = x.asInstanceOf[String]
+  s.length
+} else ...
+
