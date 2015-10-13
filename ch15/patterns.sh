@@ -53,3 +53,70 @@ def simplifyAll(expr: Expr): Expr = expr match {
   case BinOp(op, l, r) => BinOp(op, simplifyAll(l), simplifyAll(r))
   case _ => expr
 }
+
+println("""simplify ---> BinOp("+",UnOp("-", UnOp("-",Var("x"))),BinOp("*",Var("y"), Number(1)))""")
+println(simplifyAll(BinOp("+",UnOp("-", UnOp("-",Var("x"))),BinOp("*",Var("y"), Number(1)))))
+
+// PATTERNS IN VARIABLE DEFINITIONS
+
+val myTuple = (123, "abc")
+val (number, string) = myTuple
+println("my Tuple number = " + number)
+println("my Tuple string = " + string)
+
+// CASE SEQUENCES as PARTIAL FUNCTIONS
+/*
+a case seq is a function literal, only more general.
+Instead having a single entry point and list of parameters, a case seq has multiple entry points,
+  each with their own list of parameters.
+Each case is an entry point to the function and the parameters are specified with the pattern.
+
+This is quite useful for actors library. some typical code ex:
+react {
+  case (name: String, actor: Actor) => {
+    actor ! getip(name)
+    act()
+  }
+  case msg => {
+    println("Unhandled message: " + msg)
+    act()
+  }
+}
+*/
+
+val withDefault: Option[Int] => Int = {
+  case Some(x) => x
+  case None => 0
+}
+println("withDefault(Some(10)) = " + withDefault(Some(10)))
+println("withDefault(None)     = " + withDefault(None))
+
+val second: PartialFunction[List[Int], Int] = {
+  case x :: y :: _ => y
+}
+println("second(List(5, 6, 7)) = " + second(List(5, 6, 7)) )
+
+// this one fail below
+// println("second(List())        = " + second(List()) )
+
+// Partial function has a method isDefinedAt which can be used to test whether the function is defined at a particular value.
+//  this is done using pattern matching.
+
+// this will return true
+println(second.isDefinedAt(List(5,6,7)))
+
+// this will return false
+println(second.isDefinedAt(List()))
+
+/* The above partial function gets translated into
+new PartialFunction[List[Int], Int] {
+  def apply(xs: List[Int]) = xs match {
+    case x :: y :: _ => y
+  }
+  def isDefinedAt(xs: List[Int]) = xs match {
+    case x :: y :: _ => true
+    case _ => false
+  }
+}
+*/
+
