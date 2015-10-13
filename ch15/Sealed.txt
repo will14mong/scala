@@ -1,0 +1,15 @@
+Whenever we write a pattern match, we need to make sure we have covered all of the possible cases.
+We can seal our case classes so that it cannot be subclassed anymore except the ones in the same file.
+
+sealed abstract class Expr
+case class Var(name: String) extends Expr
+case class Number(num: Double) extends Expr
+case class UnOp(operator: String, arg: Expr) extends Expr
+case class BinOp(operator: String, left: Expr, right: Expr) extends Expr
+
+so now when we define pattern match with some of possible cases left out, we'll get a compiler warning
+
+def describe(e: Expr): String = e match {
+  case Number(_) => "a number"
+  case Var(_) => "a variable"
+}
