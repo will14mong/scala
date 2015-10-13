@@ -120,3 +120,14 @@ new PartialFunction[List[Int], Int] {
 }
 */
 
+// PATTERNS IN FOR EXPRESSION
+
+val capitals = Map("France" -> "Paris", "Japan" -> "Tokyo")
+
+for ((country, city) <- capitals)
+  println("The capital of " + country + " is " + city)
+
+// There could be cases where it doesn't match against pattern. in that case it will be drop.
+// example the second element of the below example is discarded
+val results = List(Some("apple"), None, Some("orange"))
+for (Some(fruit) <- results) println(fruit)
