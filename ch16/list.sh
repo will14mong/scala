@@ -32,12 +32,19 @@ val emptyList = Nil
 // - head       returns the first element of a list
 // - tail       returns a list consisting of all elements except the first
 // - isEmpty    returns true if the list is empty
+// - init       returns the list except the last element
+// - last       returns the last element of a list
 
-println(empty.isEmpty)
-println(fruit.isEmpty)
-println(fruit.head)
-println(fruit.tail.head)
-println(diag3.head)
+println("fruit = " + fruit)
+println("diag3 = " + diag3)
+println("empty = " + empty)
+println("empty.isEmpty = " + empty.isEmpty)
+println("fruit.isEmpty = " + fruit.isEmpty)
+println("fruit.head = " + fruit.head)
+println("fruit.tail.head = " + fruit.tail.head)
+println("diag3.head = " + diag3.head)
+println("fruit.init = " + fruit.init)
+println("fruit.last = " + fruit.last)
 
 // insertion sort
 def isort(xs: List[Int]): List[Int] =
@@ -61,3 +68,17 @@ val a1 :: b1 :: rest = List(1,2,3,4,5,6)
 println("a1 = " + a1)
 println("b1 = " + b1)
 println("rest = " + rest)
+
+// assume we want to implement ::: ourselves
+// element type T can be arbitrary and this is expressed by giving append a type parameter
+//   more of this on ch19
+def append[T](xs: List[T], ys: List[T]): List[T] =
+  xs match {
+    case List() => ys
+    case x :: xs1 => x :: append(xs1, ys)
+  }
+
+println(append(List(1,2,3), List(4,5,6)))
+
+// length is expensive operation in List because it needs to traverse the whole list.
+// use isEmpty to check for length == 0 is better.
