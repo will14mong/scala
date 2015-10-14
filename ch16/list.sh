@@ -69,6 +69,28 @@ println("a1 = " + a1)
 println("b1 = " + b1)
 println("rest = " + rest)
 
+// Using pattern matching to implement isort
+def isort2(xs: List[Int]): List[Int] = xs match {
+  case List()   => List()
+  case x :: xs1 => insert2(x, isort2(xs1))
+}
+
+def insert2(x: Int, xs: List[Int]): List[Int] = xs match {
+  case List()  => List(x)
+  case y :: ys => if (x <= y) x :: xs
+                  else y :: insert2(x, ys)
+}
+
+println(isort2(List(2,5,4,6,9,8,1,3,7)))
+
+// concatenate two list use :::
+val l1 = List(1, 2, 3)
+val l2 = List(4, 5, 6)
+val l3 = List(7, 8, 9)
+val l4 = l1 ::: l2 ::: l3
+println("l4 = " + l4)
+// l4 is equivalent to l4 = l1 ::: (l2 ::: l3)
+
 // assume we want to implement ::: ourselves
 // element type T can be arbitrary and this is expressed by giving append a type parameter
 //   more of this on ch19
