@@ -9,14 +9,14 @@ case class UnOp(operator: String, arg: Expr) extends Expr
 case class BinOp(operator: String, left: Expr, right: Expr) extends Expr
 
 // Benefit with case keyword:
-// First, scala compiler add convenience to th class such as factory method with the name of the class.
+// First, scala compiler add convenience to the class such as factory method with the name of the class.
 // we can say Var("x") instead of new Var("x")
 val v = Var("x")
 
 // particularly nice if we nest them
 val op = BinOp("+", Number(1), v)
 
-// Second, all arguments int he param list of a case class implicitly get a val prefix
+// Second, all arguments in the param list of a case class implicitly get a val prefix
 // so they are maintained as fields
 println("v.name = " + v.name)
 println("op.left = " + op.left)
