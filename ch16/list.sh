@@ -118,9 +118,24 @@ def rev[T](xs: List[T]): List[T] = xs match {
 // drop - returns all elements of the list except the first n ones
 // splitAt - splits the list at a given index, returning a pair of two lists.
 // apply - get element at index
+// indices - return indices starting from 0 as a Range
 var abcde = List("a","b","c","d","e")
 abcde take 2
 abcde drop 2
 abcde splitAt 2
 abcde apply 2
 abcde(2)
+abcde.indices
+
+// flatten - similar to raze in q
+fruit.map(_.toCharArray).flatten
+
+// zip - similar to ,' in q. but if it is different length, the unmatched elements are dropped.
+abcde.indices zip abcde
+
+// zipWithIndex - pairs every element of a list with the position where it appears in the liast
+abcde.zipWithIndex
+
+// unzip - reverse back the operation of zip
+val zipped = abcde.indices zip abcde
+zipped.unzip
