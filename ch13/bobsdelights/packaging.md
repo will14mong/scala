@@ -1,4 +1,4 @@
-Two ways to create package:
+* Two ways to create package:
 
 ```scala
 package bobsrockets.navigation
