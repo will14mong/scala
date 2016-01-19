@@ -104,3 +104,23 @@ println(append(List(1,2,3), List(4,5,6)))
 
 // length is expensive operation in List because it needs to traverse the whole list.
 // use isEmpty to check for length == 0 is better.
+
+// reversing
+fruitList.reverse
+
+// Implemented reverse using concatenation (:::)
+def rev[T](xs: List[T]): List[T] = xs match {
+  case List() => xs
+  case x :: xs1 => rev(xs1) ::: List(x)
+}
+
+// take - return the first n elements of the list
+// drop - returns all elements of the list except the first n ones
+// splitAt - splits the list at a given index, returning a pair of two lists.
+// apply - get element at index
+var abcde = List("a","b","c","d","e")
+abcde take 2
+abcde drop 2
+abcde splitAt 2
+abcde apply 2
+abcde(2)
