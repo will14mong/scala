@@ -1,40 +1,46 @@
-13.1
+* Two ways to create package:
+
+```scala
 package bobsrockets.navigation
 class Navigator
-
-13.2
+```
+or
+```scala
 package bobsrockets.navigation {
   class Navigator
 }
+```
 
-13.3
-package bobrockets {
+* Multiple packages in the same file
+```scala
+package bobsrockets {
   package navigation {
-
     // In package bobsrockets.navigation
     class Navigator
-
     package tests {
-
       // In package bobsrockets.navigation.tests
       class NavigatorSuite
     }
   }
 }
+```
 
-13.4
+* Concise access to classes and packages
+```scala
 package bobsrockets {
   package navigation {
     class Navigator {
-      // No need to say bobsrockets.navigation.StarMap
-      val map = new StarMap
+    // No need to say bobsrockets.navigation.StarMap
+    val map = new StarMap
     }
     class StarMap
   }
+
   class Ship {
     // No need to say bobsrockets.navigation.Navigator
     val nav = new navigation.Navigator
   }
+
   package fleets {
     class Fleet {
       // No need to say bobsrockets.Ship
@@ -42,20 +48,24 @@ package bobsrockets {
     }
   }
 }
+```
 
-13.5
+* Symbols in enclosing packages not automatically available
+```scala
 package bobsrockets {
   class Ship
 }
 
 package bobsrockets.fleets {
   class Fleet {
-    //Doesn't compile! Ship is not in scope.
+    // Doesn't compile! Ship is not in scope.
     def addShip() { new Ship }
   }
 }
+```
 
-13.6
+* Accessing hidden package names
+```scala
 // In file launch.scala
 package launch {
   class Booster3
@@ -65,7 +75,7 @@ package launch {
 package bobsrockets {
   package navigation {
     package launch {
-      class Booster1
+     class Booster1
     }
     class MissionControl {
       val booster1 = new launch.Booster1
@@ -74,6 +84,8 @@ package bobsrockets {
     }
   }
   package launch {
-    class Booseter2
+    class Booster2
   }
 }
+```
+
