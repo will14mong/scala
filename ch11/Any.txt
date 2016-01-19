@@ -7,7 +7,7 @@ def ##: Int
 def hashCode: int
 def toString: String
 
-Root class Any has two subclasses: AnVal and AnyRef
+Root class Any has two subclasses: AnyVal and AnyRef
 Refer to pg: 252 of Programming in Scala 2nd Edition for class relationship graph.
 
 AnyVal is the parent class of every built-in value class in Scala.
