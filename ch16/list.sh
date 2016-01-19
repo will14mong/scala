@@ -139,3 +139,26 @@ abcde.zipWithIndex
 // unzip - reverse back the operation of zip
 val zipped = abcde.indices zip abcde
 zipped.unzip
+
+abcde.mkString","  // will get a,b,c,d,e
+abcde.mkString("[",",","]")  // will get [a,b,c,d,e]
+
+// Using StringBuilder
+val buf = new StringBuilder
+abcde addString(buf,"(",";",")")
+
+// Converting List to and from Array
+// toArray
+// toList
+val arr = abcde.toArray
+arr.toList
+
+// copyToArray - copies list elements to successive array positions within some destination array.
+val arr2 = new Array[Int](10)
+List(1,2,3) copyToArray(arr2,3)
+// arr2 is Array(0, 0, 0, 1, 2, 3, 0, 0, 0, 0)
+
+// iterator - return iterator to access element
+val it = abcde.iterator
+it.next 
+
