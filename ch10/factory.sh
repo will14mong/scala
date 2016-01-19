@@ -26,6 +26,7 @@ object Element {
 
   private class UniformElement(
     ch: Char,
+    // 'override' keyword is optional if parent class method with the same name is abstract.
     override val width: Int,
     override val height: Int
   ) extends Element {
