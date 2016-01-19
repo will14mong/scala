@@ -162,3 +162,7 @@ List(1,2,3) copyToArray(arr2,3)
 val it = abcde.iterator
 it.next 
 
+// map vs flatMap
+val words = List("the", "quick", "brown", "fox")
+words map (_.toList) // List(List(t, h, e), List(q, u, i, c, k), List(b, r, o, w, n), List(f, o, x))
+words flatMap (_.toList) // List(t, h, e, q, u, i, c, k, b, r, o, w, n, f, o, x)
