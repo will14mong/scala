@@ -20,6 +20,7 @@ object Element {
     new LineElement(line)
 
   private class ArrayElement(
+    // override the abstract contents method as field. note the use of val keyword here.
     val contents: Array[String]
   ) extends Element
 
