@@ -52,6 +52,7 @@ abstract class Element {
   def above(that: Element): Element = {
     val this1 = this widen that.width
     val that1 = that widen this.width
+    // ++ operation concatenate 2 arrays
     elem(this1.contents ++ that1.contents)
   }
 
