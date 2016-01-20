@@ -20,6 +20,9 @@ def msort[T](less: (T, T) => Boolean)(xs: List[T]): List[T] = {
 }
 
 println(msort((x:Int, y:Int) => x < y)(List(5,7,1,3)))
+// or in a short form
+msort[Char](_ > _)(List("a","d","b"))
 
 // Currying, create a new specialized function
 val intSort = msort((x: Int, y: Int) => x < y) _
+
