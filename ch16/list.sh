@@ -166,3 +166,62 @@ it.next
 val words = List("the", "quick", "brown", "fox")
 words map (_.toList) // List(List(t, h, e), List(q, u, i, c, k), List(b, r, o, w, n), List(f, o, x))
 words flatMap (_.toList) // List(t, h, e, q, u, i, c, k, b, r, o, w, n, f, o, x)
+
+// another use of flatMap
+List.range(1,5) flatMap ( i => List.range(1,i) map (j => (i,j)))
+// that will produce  List((2,1), (3,1), (3,2), (4,1), (4,2), (4,3))
+
+// foreach
+var sum = 0
+List(1,2,3,4,5) foreach (sum+= _)
+
+// filter
+List(1,2,3,4,5) filter (_ % 2 == 0)  // even number only
+
+// partition
+// xs partition p equals (xs filter p, xs filter (!p(_)))
+List(1,2,3,4,5) partition (_% 2 == 0)
+
+// find - return the first element satisfying the given predicate.
+// It returns optional value, if found Some(x) otherwise None
+List(1,2,3,4,5) find (_ % 2 == 0)
+List(1,2,3,4,5) find (_ <= 0)
+
+// takeWhile - takes the longest prefix of list xs such that every element in the prefix satisfies p
+List(1,2,3,-4,5) takeWhile (_ > 0)  // will return List(1,2,3)
+// dropWhile - removes the longest prefix from list xs such that every element in the prefix satisfies p
+words dropWhile (_ startsWith "t")
+
+// span - combines takeWhile & dropWhile in one operation
+// xs span p equals (xs takeWhile p, xs dropWhile p)
+List(1,2,3,-4,5) span (_ > 0)
+
+// forall - takes as arguments a list xs and a predicate p, result true if all element in the list satisfy p
+// exists - converse, return true if any element satisfy predicate p
+List(1, 2, 3, 4) forall (_ < 5) // return true
+List(1, 2, 3, 4) exists (_ == 1) // return true
+
+// fold list /: and \:
+// (z /: List(a, b, c)) (op) equals op(op(op(z, a), b), c)
+// (List(a, b, c) :\ z) (op) equals op(a, op(b, op(c, z)))
+(0 /: List(1,2,3)) (_ + _)
+
+// reverse list 
+def reverseLeft[T](xs: List[T]) = (List[T]() /: xs) {(ys, y) => y :: ys}
+
+// sorting
+// sortWith - xs sortWith before
+List(1,-3,4,2,6) sortWith (_ < _)
+
+// List method
+List.apply(1,2,3)   // creating List
+List.range(1,5)     // creating List of range
+List.fill(5)('a')   // creating List of 5 'a' s
+List.fill(2,3)('b') // List(List(b, b, b), List(b, b, b)), creating 2 Lists of 3 items 'b'
+List.tabulate(5)(n => n*n) // produce List(0,1,4,9,16)
+List.tabulate(5,5)(_ * _)  // produce multiplication table
+List.concat(List(),List('b'), List('c')) // produce List(b,c)
+
+// zipped - generalizes several common operations to work on multiple lists instead of just one
+(List(10, 20), List(3, 4, 5)).zipped.map(_ * _) // produce List(30,80)
+(List("abc", "de"), List(3, 2)).zipped.forall(_.length == _)  // produce true
