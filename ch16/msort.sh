@@ -23,6 +23,13 @@ println(msort((x:Int, y:Int) => x < y)(List(5,7,1,3)))
 // or in a short form
 msort[Char](_ > _)(List("a","d","b"))
 
+// or we swap the argument, so the interpreter know the type 
+//def msortSwapped[T](xs: List[T])(less:(T,T) => Boolean): List[T] = {
+  // same implementation as above.
+//}
+// Then we can do 
+// msortSwapped(abcde)(_ > _)
+
 // Currying, create a new specialized function
 val intSort = msort((x: Int, y: Int) => x < y) _
 
