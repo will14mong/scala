@@ -131,3 +131,68 @@ new LazyRationalTrait {
 // note that the above is fine because it's using lazy eval, so we don't need with pre-init
 
 // 6. Abstract types
+
+// class Food
+// abstract class Animal {
+//   def eat(food: Food)
+// }
+// class Grass extends Food
+// class Cow extends Animal {
+//   override def eat(food: Grass) {} // This won't compile because func param is different for eat.
+// }                               // but if it did, ...
+// class Fish extends Food
+// val bessy: Animal = new Cow
+// bessy eat (new Fish)   // ... you could feed fish to cows
+
+// instead, try using abstract types
+class Food
+abstract class Animal {
+  type SuitableFood <: Food
+  def eat(food: SuitableFood)
+}
+class Grass extends Food
+class Cow extends Animal {
+  type SuitableFood = Grass
+  override def eat(food: Grass) {}
+}
+
+// now this will behave nicely
+
+// 7. Path dependent types
+class DogFood extends Food
+class Dog extends Animal {
+  type SuitableFood = DogFood
+  override def eat(food: DogFood) {}
+}
+val bessy = new Cow
+val lassie = new Dog
+// bessy.SuitableFood is different than lassie.SuitableFood
+val bootsie = new Dog
+lassie eat(new bootsie.SuitableFood) // this is allowed
+
+// 8. Structural Typing
+// to define animal that eat grass
+class Pasture {
+  var animals: List[Animal { type SuitableFood = Grass }] = Nil
+}
+
+// another useful stuff that we want to do is to group together a number of classes
+// that were written by someone else.
+// let's try to generalize this:
+// using(new PrintWriter("date.txt")) { writer =>
+//   writer.println(new Date)
+// }
+// using(serverSocket.accept()) { socket =>
+//   socket.getOutputStream().write("hello, world\n".getBytes)
+// }
+
+// Methods perform operation and then closes an object.
+// takes 2 arguemnts: the operation and the object
+
+def using[T <: { def close(): Unit }, S](obj: T)
+    (operation: T => S) = {
+  val result = operation(obj)
+  obj.close()
+  result
+}
+
