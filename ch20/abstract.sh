@@ -108,3 +108,26 @@ class Concrete extends Abstract {
 // }
 
 // x is lazy, the init of it will be done once on the first call.
+
+// reformulate RationalTrait using lazy vals
+trait LazyRationalTrait {
+  val numerArg: Int
+  val denomArg: Int
+  lazy val numer = numerArg / g
+  lazy val denom = denomArg / g
+  override def toString = numer +"/"+ denom
+  private lazy val g = {
+    require(denomArg != 0)
+    gcd(numerArg, denomArg)
+  }
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+}
+
+new LazyRationalTrait {
+  val numerArg = 2
+  val denomArg = 4
+}
+
+// note that the above is fine because it's using lazy eval, so we don't need with pre-init
+
+// 6. Abstract types
