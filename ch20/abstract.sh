@@ -196,3 +196,37 @@ def using[T <: { def close(): Unit }, S](obj: T)
   result
 }
 
+// 9. Enumerations
+
+object Color extends Enumeration {
+  val Red = Value
+  val Green = Value
+  val Blue = Value
+}
+
+// or 
+// object Color extends Enumeration {
+//   val Red, Green, Blue = Value
+// }
+
+// to use
+// import Color._
+// then just use Red, Green and Blue
+
+// Color.Red is of type Color.Value
+
+// another constructor for Value
+object Direction extends Enumeration {
+  val North = Value("North Direction")
+  val East = Value("East Direction")
+  val South = Value("South Direction")
+  val West = Value("West Direction")
+}
+
+for (d <- Direction.values) print (d + " ")
+println("--")
+
+// values of enumeration are numbered from 0.
+println("East is having id as: " + Direction.East.id)
+println("Value of id 1 is: " + Direction(1))
+
