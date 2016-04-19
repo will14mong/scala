@@ -34,3 +34,5 @@ args.foreach(println)
 println("Printing using for")
 for (arg <- args) 
   println(arg)
+
+
